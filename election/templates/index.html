@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SAC Election Portal</title>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{url_for('static',filename='index.css')}}" />
+    <script src="{{url_for('static',filename='index.js')}}"></script>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="heading nav_heading"><h1>SAC Election Portal</h1></div>
+    </div>
+    <div class="container">
+      <div class="description">
+        <h2>Welcome to our app!!</h2>
+        <p>
+          You can get started by entering your email and your password. By
+          default the password is your roll number.
+        </p>
+      </div>
+      <form action="/home" method="POST" onsubmit="return handleClick()">
+        <h3>Login To Your Account</h3>
+        <input
+          type="text"
+          placeholder="Enter Your Email Here"
+          name="name"
+          id="name"
+        />
+        <input
+          type="text"
+          placeholder="Enter Your Password Here"
+          name="name"
+          id="name"
+        />
+
+        <input type="submit" value="Submit" class="submit" id="submit" />
+        <div class="comment" id="comment"></div>
+      </form>
+    </div>
+  </body>
+</html>
