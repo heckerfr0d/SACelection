@@ -59,3 +59,12 @@
   INSERT INTO position (position) VALUES ('Joint Secretary (JS)');
   INSERT INTO position (position) VALUES ('Chief Student Editor (SE)');
   INSERT INTO position (position) VALUES ('Alumni Affairs Secretary (ALAS)');
+
+  INSERT INTO election(start_datetime,end_datetime,admin_email) VALUES ('2020-06-22 19:10:25-07','2022-06-22 19:10:25-07','admin@nitc.ac.in');
+
+  INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('hadif_b190513cs@nitc.ac.in','hadif',0,1,1);
+
+  INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('hanna_b190420cs@nitc.ac.in','hanna',5,2,1);
+
+  INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('harimurali_b190547cs@nitc.ac.in','harimurali',10,3,1);
+
