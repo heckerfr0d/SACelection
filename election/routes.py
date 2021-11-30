@@ -14,7 +14,7 @@ def root():
 def login():
     user = db.auth(request.form.get('email'), request.form.get('password'))
     if user:
-        if user.get_status==-1:
+        if user.get_status()==-1:
             if not db.get_running_election():
                 login_user(user)
                 return redirect(url_for('admin'))
@@ -56,4 +56,5 @@ def admin():
         return "something in db"
     election_id = db.get_upcoming_election()
     candidates = db.get_candidates(election_id)
-    return "something"
+    positions = db.get_positions()
+    return render_template('admin.html',election_id=election_id,candidates=candidates,positions=positions)
