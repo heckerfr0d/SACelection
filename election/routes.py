@@ -24,7 +24,7 @@ def login():
         return "some error"
 
 @app.route('/view/')
-@login_required()
+@login_required
 def view():
     election_id = db.get_current_election()
     candidates = db.get_candidates(election_id)
