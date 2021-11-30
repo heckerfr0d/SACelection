@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Voting page</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static',filename='vote.css')}}" />
+    <script src="{{url_for('static',filename='vote.js')}}"></script>
+  </head>
+  <body>
+    {% block title%}
+    <div class="other_profile">
+      <h1>Vote for your candidates</h1>
+    </div>
+    {% endblock%}
+
+        <table class='table table-dark'>
+          <tr>
+            <th>Email</th>
+            <th>Name</th>
+            <th>position</th>
+            <th>Vote status</th>
+          </tr>
+        {% for candidate in candidates%}
+        
+
+              <tr>
+              <td>{{candidate[0]}}</td>
+              <td>{{candidate[1]}}</td>
+              <td>{{candidate[2]}}</td>
+              <td> <button type="button">Vote</button> </td>
+              </tr>
+        
+        {% endfor %}
+
+    </table>
+      <input type="submit" value="Submit" class="submit" id="submit" />
+
+   
+    <div class="material-icons back-to-top">
+      <span class="material-icons-outlined" onclick="toTop()">
+        arrow_circle_up
+      </span>
+    </div>
+  </body>
+</html>
