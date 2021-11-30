@@ -10,9 +10,25 @@ function handleClick() {
     document.getElementById("comment").innerHTML =
       "Please Enter your Password! ";
   }
+
   if (!(name1.value && content.value)) return false;
   setCookie("username", name1.value, 1);
-  return true;
+
+  const response = await fetch("/login", {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify({ username: name1, password: content }),
+  });
+  console.log(response.json());
+  if (response.json()) return true;
+  else return false;
 }
 
 //////
