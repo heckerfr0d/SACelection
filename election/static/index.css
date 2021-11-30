@@ -1,0 +1,189 @@
+form {
+  display: flex;
+  flex-direction: column;
+  background-color: #023e8a;
+  justify-content: space-evenly;
+  align-items: center;
+  min-height: 40vh;
+  width: 600px;
+  /* margin-left: auto; */
+  margin-right: 15%;
+  box-shadow: 8px 10px #4b5d83;
+  /* border-radius: 3%; */
+}
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+form > input {
+  width: 80%;
+  height: 2.3rem;
+  margin-bottom: 10%;
+}
+form > h3 {
+  font-weight: bold;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  color: white;
+  text-shadow: 0px 0px 2px black;
+
+  font-weight: 200;
+  font-family: helvetica;
+  align-self: flex-start;
+  margin-left: 10%;
+  font-size: 2rem;
+}
+
+.navbar i{
+  scale: 2.5;
+}
+
+.comment {
+  color: white;
+  text-shadow: 0px 0px 2px black;
+  padding: 10px 10px;
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.submit {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.content {
+  height: 5rem;
+  margin-bottom: 10%;
+  width: 80%;
+  outline: none;
+}
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: auto;
+  /* background-color: rgba(95, 152, 165, 0.795); */
+  background-color: #f1f6f9;
+}
+
+.navbar {
+  background-color: #14274e;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1% 10%;
+  padding-left: 6%;
+  box-shadow: 1px 3px #fff;
+}
+.nav_heading {
+  color: #dbedf3;
+  text-decoration: solid 1px 3px #fff;
+}
+
+.navbar > .heading {
+  font-size: 200%;
+}
+.navbar > .home_link {
+  font-size: 150%;
+}
+.navbar > .home_link:hover {
+  cursor: pointer;
+  color: #264653;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.description {
+  color: #264653;
+  margin-left: 5%;
+  width: 35vw;
+}
+.description > h2 {
+  font-size: 3.5rem;
+}
+.description > p {
+  font-size: 2rem;
+}
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@media (max-width: 550px) {
+  .container {
+    flex-direction: column-reverse;
+  }
+
+  .comment{
+    font-size: 1.5rem;
+  }
+
+  .navbar i{
+    scale: 1.5;
+  }
+
+  .navbar h1{
+    font-size: 30px;
+  }
+
+  .description {
+    width: 95%;
+    margin: 5% 1%;
+    margin-top: 5%;
+    padding: 7% 7%;
+ 
+  }
+  
+
+  .navbar > .heading {
+    font-size: 125%;
+  }
+  .navbar > .home_link {
+    font-size: 90%;
+  }
+  .navbar {
+    padding: 1% 5%;
+  }
+  .description > h2 {
+    font-size: 2rem;
+  }
+  .description > p {
+    font-size: 1.5rem;
+  }
+  form {
+    width: 80%;
+    margin: 10% 11%;
+    margin-bottom: 1%;
+    padding: 10% 5%;
+  }
+}
+
+@media (min-width: 550px) and (max-width: 1150px) {
+  .container {
+    flex-direction: column-reverse;
+  }
+  .description h2{
+    font-size: 2.5rem;
+  }
+  .navbar h1{
+    font-size: 3rem;
+  }
+  .comment{
+    font-size: 2rem;
+  }
+  .description > p {
+    font-size: 2rem;
+  }
+  .description {
+    width: 80%;
+    margin: 5% 5%;
+    padding: 7% 7%;
+  }
+  form {
+    width: 80%;
+    margin: 5% 11%;
+  }
+}

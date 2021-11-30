@@ -5,7 +5,7 @@ from . import db
 
 @app.route('/')
 def home():
-    return render_template('base.html')
+    return render_template('index.html')
 
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
