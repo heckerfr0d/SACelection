@@ -55,6 +55,10 @@ def admin():
     if request.method == 'POST':
         return "something in db"
     election_id = db.get_upcoming_election()
-    candidates = db.get_candidates(election_id)
+    candidates = {}
+    for i in range(1,11):
+        candidates[i] = db.get_candidate_position(i)
+        print(candidates[i])
+        print("CHICKNE")
     positions = db.get_positions()
     return render_template('admin.html',election_id=election_id,candidates=candidates,positions=positions)

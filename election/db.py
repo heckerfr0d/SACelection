@@ -105,3 +105,11 @@ def get_positions():
     cur.close()
     return positions
 
+def get_candidate_position(id):
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("SELECT name from candidate where position_id=%s ",(id,))
+    candidates = cur.fetchall()
+    cur.close()
+    return candidates
+
