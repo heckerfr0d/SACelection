@@ -59,3 +59,6 @@
   INSERT INTO position (position) VALUES ('Joint Secretary (JS)');
   INSERT INTO position (position) VALUES ('Chief Student Editor (SE)');
   INSERT INTO position (position) VALUES ('Alumni Affairs Secretary (ALAS)');
+
+
+  
