@@ -46,7 +46,7 @@ def hash_password(password):
 def get_user(email_id):
     db = get_db()
     cur = db.cursor()
-    cur.execute("SELECT email_id, password, status FROM user WHERE email_id=%s", (email_id,))
+    cur.execute("SELECT email_id, password, status FROM users WHERE email_id=%s", (email_id,))
     user = cur.fetchone()
     cur.close()
     if user:
@@ -66,7 +66,7 @@ def add_user(email_id, password, status):
         db = get_db()
         cur = db.cursor()
         password = hash_password(password)
-        cur.execute("INSERT INTO user (email_id, password, status) VALUES (%s, %s, %s)", (email_id, password, status))
+        cur.execute("INSERT INTO users (email_id, password, status) VALUES (%s, %s, %s)", (email_id, password, status))
         db.commit()
         cur.close()
         return User(email_id, password, status)
