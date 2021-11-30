@@ -50,12 +50,14 @@ def get_user(email):
     user = cur.fetchone()
     cur.close()
     if user:
-        return User(user[0], user[1], user[2])
+        return User(user[0], user[1], int(user[2]))
     return None
 
 def auth(email_id, password):
     user = get_user(email_id)
+    print(user.get_status)
     if user:
+        print(user.password)
         if user.password == hash_password(password):
             return user
     return None
@@ -95,4 +97,11 @@ def get_candidates(election_id):
     candidates = cur.fetchall()
     cur.close()
     return candidates
+def get_positions(): 
+    db= get_db()
+    cur =db.cursor()
+    cur.execute("Select position from position")
+    positions= cur.fetchall()
+    cur.close()
+    return positions
 
