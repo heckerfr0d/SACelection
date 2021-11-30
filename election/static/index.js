@@ -2,13 +2,13 @@ const name = document.getElementById("name");
 const content = document.getElementById("content");
 const submit = document.getElementById("submit");
 function handleClick() {
-  const name1 = document.getElementById("name");
-  const content = document.getElementById("content");
+  const name1 = document.getElementById("email");
+  const content = document.getElementById("password");
   if (!name1.value) {
-    document.getElementById("comment").innerHTML = "Please enter your name!";
+    document.getElementById("comment").innerHTML = "Please enter your email!";
   } else if (!content.value) {
     document.getElementById("comment").innerHTML =
-      "Don't be shy, share something";
+      "Please Enter your Password! ";
   }
   if (!(name1.value && content.value)) return false;
   setCookie("username", name1.value, 1);
