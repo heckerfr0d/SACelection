@@ -1,6 +1,7 @@
 from flask import request, render_template, redirect, url_for
 from flask import current_app as app
 from flask_login import login_user, logout_user, current_user, login_required
+from flask_cors import CORS, cross_origin
 from . import db
 import election
 
@@ -9,8 +10,9 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/login/', methods=['POST'])
+@app.route('/login', methods=['POST'])
 def login():
+    print('test')
     user = db.auth(request.json.get('username'), request.json.get('password'))
     if user and (user.get_status==-1 or db.get_running_election()):
         login_user(user)
