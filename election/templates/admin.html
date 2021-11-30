@@ -13,7 +13,7 @@
     <title>Document</title>
   </head>
   <body>
-    {% for position in positions%}
+    {% for position,candidates in packed%}
     <div class="wrapper">
       <header>{{position[0]}}</header>
       <div class="inputField">
@@ -21,7 +21,11 @@
         <button><i class="fas fa-plus"></i></button>
       </div>
       <ul class="todoList">
-        <!-- data are comes from local storage -->
+        {% for candidate in candidates%}
+        <li>
+          {{candidate[0]}}<span class="icon"><i class="fas fa-trash"></i></span>
+        </li>
+        {%endfor%}
       </ul>
       <div class="footer">
         <span

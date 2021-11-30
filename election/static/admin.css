@@ -88,6 +88,7 @@ body {
   cursor: default;
   overflow: hidden;
   word-wrap: break-word;
+  margin-right: 35px;
 }
 .todoList li .icon {
   position: absolute;
