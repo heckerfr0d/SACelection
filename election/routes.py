@@ -6,19 +6,24 @@ from . import db
 import election
 
 @app.route('/')
-def home():
+def root():
     return render_template('index.html')
 
 
-@app.route('/login', methods=['POST'])
+@app.route('/login/', methods=['POST'])
 def login():
-    print('test')
-    user = db.auth(request.json.get('username'), request.json.get('password'))
-    if user and (user.get_status==-1 or db.get_running_election()):
-        login_user(user)
-        return True
-    else:
-        return False
+    user = db.auth(request.form.get('email'), request.form.get('password'))
+    if user:
+        if user.get_status==-1:
+            if not db.get_running_election():
+                login_user(user)
+                return redirect(url_for('admin'))
+            return render_template('index.html', message="Election is already running")
+        elif db.get_running_election():
+            login_user(user)
+            return redirect(url_for('vote'))
+        return render_template('index.html', message="Election is not active")
+    return render_template('index.html', message="Invalid Credentials")
 
 
 @app.login_manager.user_loader
@@ -38,6 +43,8 @@ def vote():
         return "something in db"
     election_id = db.get_running_election()
     candidates = db.get_candidates(election_id)
+    if candidates:
+        return render_template('vote.html', candidates=candidates)
     return "something"
 
 @app.route('/admin/', methods=['GET', 'POST'])

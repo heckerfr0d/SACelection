@@ -24,7 +24,7 @@
           default the password is your roll number.
         </p>
       </div>
-      <form action="/home" method="post" onsubmit="return handleClick()">
+      <form action="/login/" method="post" onsubmit="return handleClick()">
         <h3>Login To Your Account</h3>
         <input
           type="email"
@@ -40,7 +40,7 @@
         />
 
         <input type="submit" value="Submit" class="submit" id="submit" />
-        <div class="comment" id="comment"></div>
+        <div class="comment" id="comment">{{message}}</div>
       </form>
     </div>
   </body>
