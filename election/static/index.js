@@ -12,36 +12,8 @@ function handleClick() {
   }
 
   if (!(name1.value && content.value)) return false;
-  // setCookie("username", name1.value, 1);
-
-  asynccall(name1, content).then((result) => {
-    console.log(result);
-    return false;
-  });
+  return true;
 }
-async function asynccall(name1, content) {
-  console.log(name1.value);
-  const check = await fetch("/login/", {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "same-origin", // include, *same-origin, omit
-    headers: {
-      "Content-Type": "application/json",
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    redirect: "follow", // manual, *follow, error
-    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    body: JSON.stringify({ username: name1.value, password: content.value }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      return data;
-    });
-  return check;
-}
-//////
 
 function rerouteHome() {
   location.href = `${window.origin}/home`;
