@@ -9,16 +9,14 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/login/', methods=['GET', 'POST'])
+@app.route('/login/', methods=['POST'])
 def login():
-    if request.method == 'GET':
-        return "Login"
     user = db.auth(request.json.get('username'), request.json.get('password'))
-    if user:
+    if user and (user.get_status==-1 or db.get_running_election()):
         login_user(user)
-        return "some redirect"
+        return True
     else:
-        return "some error"
+        return False
 
 
 @app.login_manager.user_loader
