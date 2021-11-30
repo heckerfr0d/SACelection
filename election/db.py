@@ -43,10 +43,10 @@ class User:
 def hash_password(password):
     return hashlib.sha3_256(password.encode()).hexdigest()
 
-def get_user(email_id):
+def get_user(email):
     db = get_db()
     cur = db.cursor()
-    cur.execute("SELECT email_id, password, status FROM users WHERE email_id=%s", (email_id,))
+    cur.execute("SELECT email_id, password, status FROM users WHERE email_id=%s", (email,))
     user = cur.fetchone()
     cur.close()
     if user:

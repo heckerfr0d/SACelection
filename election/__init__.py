@@ -4,13 +4,13 @@ from . import db
 import os
 import datetime
 
-login_manager = LoginManager()
+loginmanager = LoginManager()
 
 def init_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'default')
     app.config['DATABASE_URL'] = os.getenv('DATABASE_URL', 'dbname=test')
-    login_manager.init_app(app)
+    loginmanager.init_app(app)
     db.init_app(app)
 
 

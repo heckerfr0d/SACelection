@@ -1,11 +1,11 @@
-from flask import request, render_template
+from flask import request, render_template, redirect, url_for
 from flask import current_app as app
 from flask_login import login_user, logout_user, current_user, login_required
 from . import db
 
 @app.route('/')
 def home():
-    return "Home?"
+    return render_template('base.html')
 
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
@@ -28,6 +28,17 @@ def login():
         return "some redirect"
     else:
         return "some error"
+
+
+@app.login_manager.user_loader
+def user_loader(email_id):
+    user = db.get_user(email_id)
+    return user
+
+
+@app.login_manager.unauthorized_handler
+def unauth():
+    return redirect(url_for('login', ret=403))
 
 @app.route('/view/')
 @login_required
