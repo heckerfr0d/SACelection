@@ -72,10 +72,18 @@ def add_user(email_id, password, status):
         return User(email_id, password, status)
     return None
 
-def get_current_election():
+def get_running_election():
     db = get_db()
     cur = db.cursor()
-    cur.execute("SELECT election_id FROM election WHERE end_datetime>%s", (datetime.now(),))
+    cur.execute("SELECT election_id FROM election WHERE start_datetime<=%s AND end_datetime>=%s", (datetime.now(), datetime.now()))
+    election = cur.fetchone()
+    cur.close()
+    return election
+
+def get_upcoming_election():
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("SELECT election_id FROM election WHERE start_datetime>%s", (datetime.now(),))
     election = cur.fetchone()
     cur.close()
     return election
@@ -83,7 +91,7 @@ def get_current_election():
 def get_candidates(election_id):
     db = get_db()
     cur = db.cursor()
-    cur.execute("SELECT c.email_id, c.name, p.position FROM candidate c, position p WHERE c.election_id=%s AND c.position_id=p.position_id", (election_id,))
+    cur.execute("SELECT c.email_id, c.name, p.position FROM candidate c, position p WHERE c.election_id=%s AND c.position_id=p.position_id ORDER BY p.position_id, c.name", (election_id,))
     candidates = cur.fetchall()
     cur.close()
     return candidates
