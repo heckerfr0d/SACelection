@@ -3,6 +3,10 @@ from flask import current_app as app
 from flask_login import login_user, logout_user, current_user, login_required
 from . import db
 
+@app.route('/')
+def home():
+    return "Home?"
+
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':
@@ -16,6 +20,8 @@ def register():
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
+    if request.method == 'GET':
+        return "Login"
     user = db.auth(request.json.get('username'), request.json.get('password'))
     if user:
         login_user(user)
