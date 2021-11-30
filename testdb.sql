@@ -68,3 +68,5 @@
 
   INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('harimurali_b190547cs@nitc.ac.in','harimurali',10,3,1);
 
+  INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('faseem_b190515cs@nitc.ac.in','faseem',10,4,1);
+
