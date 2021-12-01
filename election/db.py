@@ -130,3 +130,13 @@ def get_candidate_position_cur_election(id,elec_id):
     cur.close()
     return candidates
 
+# def add_candidate(id):
+#     db = get_db()
+#     cur = db.cursor()
+#     cur.execute("SELECT email_id from users where email_id LIKE %%s%",(id,))
+#     email = cur.fetchone()
+#     cur.execute("INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('','faseem',10,4,1);",(id,))
+#     cur.close()
+#     return election
+
+

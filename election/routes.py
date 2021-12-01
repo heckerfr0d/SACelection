@@ -64,3 +64,9 @@ def admin():
         candidates[i] = db.get_candidate_position(i)
     positions = db.get_positions()
     return render_template('admin.html',election_id=election_id,election_details=election_details,packed =zip(positions,list(candidates.values())))
+
+@app.route('/addcandidate',methods=['POST'])
+def add_candidate():
+    resp = request.get_json()
+    ## to be done ##
+    return "sucess"

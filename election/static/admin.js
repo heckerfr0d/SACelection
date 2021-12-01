@@ -70,5 +70,15 @@ const addCandidate = (id) => {
   let myinputbox = document.getElementById("add" + id);
   if (myinputbox.value) {
     console.log(myinputbox.value);
+    let data = myinputbox.value;
+    fetch("/addcandidate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        rollno: data,
+      }),
+    }).then((resp) => console.log(resp.json()));
   }
 };
