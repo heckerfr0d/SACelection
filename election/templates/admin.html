@@ -17,14 +17,22 @@
       <header>Election Schedule</header>
       <h3>Election Start time : {{election_details[1]}}</h3>
       <h3>Election End time : {{election_details[2]}}</h3>
-      <div class="footer"><button>Modify Schedule</button></div>
+      <div class="footer">
+        <button>Modify Schedule</button>
+      </div>
     </div>
     {% for position,candidates in packed%}
     <div class="wrapper">
       <header>{{position[0]}}</header>
       <div class="inputField">
-        <input type="text" placeholder="Add new candidates here" />
-        <button><i class="fas fa-plus"></i></button>
+        <input
+          type="text"
+          placeholder="Add new candidates here"
+          id="add{{position[0]}}"
+        />
+        <button onclick="addCandidate('{{position[0]}}')">
+          <i class="fas fa-plus"></i>
+        </button>
       </div>
       <ul class="todoList">
         {% for candidate in candidates%}
