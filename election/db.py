@@ -90,6 +90,15 @@ def get_upcoming_election():
     cur.close()
     return election
 
+def get_upcoming_election_details():
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("SELECT * FROM election WHERE start_datetime>%s", (datetime.now(),))
+    election = cur.fetchone()
+    cur.close()
+    return election
+    
+
 def get_candidates(election_id):
     db = get_db()
     cur = db.cursor()

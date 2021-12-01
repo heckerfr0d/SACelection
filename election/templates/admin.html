@@ -13,6 +13,12 @@
     <title>Document</title>
   </head>
   <body>
+    <div class="wrapper">
+      <header>Election Schedule</header>
+      <h3>Election Start time : {{election_details[1]}}</h3>
+      <h3>Election End time : {{election_details[2]}}</h3>
+      <div class="footer"><button>Modify Schedule</button></div>
+    </div>
     {% for position,candidates in packed%}
     <div class="wrapper">
       <header>{{position[0]}}</header>
