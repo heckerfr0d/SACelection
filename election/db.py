@@ -112,4 +112,12 @@ def get_candidate_position(id):
     candidates = cur.fetchall()
     cur.close()
     return candidates
+    
+def get_candidate_position_cur_election(id,elec_id):
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("SELECT name from candidate where position_id=%s AND election_id=%s",(id,elec_id))
+    candidates = cur.fetchall()
+    cur.close()
+    return candidates
 

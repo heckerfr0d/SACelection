@@ -42,9 +42,12 @@ def vote():
     if request.method == 'POST':
         return "something in db"
     election_id = db.get_running_election()
-    candidates = db.get_candidates(election_id)
+    candidates = {}
+    for i in range(1,11):
+        candidates[i] = db.get_candidate_position_cur_election(i,election_id)
+    positions = db.get_positions()
     if candidates:
-        return render_template('vote.html', candidates=candidates)
+        return render_template('vote.html', packed =zip(positions,list(candidates.values())))
     return "something"
 
 @app.route('/admin/', methods=['GET', 'POST'])
