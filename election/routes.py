@@ -96,7 +96,7 @@ def add_candidate():
 def election(eid):
     if request.method == 'GET':
         election_details = db.get_upcoming_election_details()
-        print(election_details[1])
+
         return render_template('election.html', election_id=election_details[0], election_details=election_details)
 
     else:
