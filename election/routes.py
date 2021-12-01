@@ -61,6 +61,5 @@ def admin():
     candidates = {}
     for i in range(1,11):
         candidates[i] = db.get_candidate_position(i)
-        print(candidates[i])
     positions = db.get_positions()
     return render_template('admin.html',election_id=election_id,packed =zip(positions,list(candidates.values())))
