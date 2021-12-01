@@ -36,7 +36,9 @@
       <h3>Election Start time : {{election_details[1]}}</h3>
       <h3>Election End time : {{election_details[2]}}</h3>
       <div class="footer">
-        <button>Modify Schedule</button>
+        <button onclick="modifySchedule('{{election_id}}')">
+          Modify Schedule
+        </button>
       </div>
     </div>
     {% for position,candidates in packed%}

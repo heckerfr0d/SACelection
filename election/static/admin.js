@@ -100,3 +100,8 @@ const getModal = (id) => {
     modal.classList.add("open-modal");
   }
 };
+
+const modifySchedule = (election_id) => {
+  window.location.href = `${window.origin}/election/${election_id}`;
+
+}

@@ -39,26 +39,18 @@ def unauth():
     return redirect(url_for('login', ret=403))
 
 
-
 @app.route('/vote/', methods=['GET', 'POST'])
 @login_required
 def vote():
-    user_id = current_user.get_id()
-    election_id = db.get_running_election()
     if request.method == 'POST':
-        resp = request.get_json()
-        result =db.modify_votes(resp['can_name'],user_id,election_id)
-        print(result)
         return "something in db"
+    election_id = db.get_running_election()
     candidates = {}
-    for i in range(1,11):
-        if not db.check_if_voted(user_id,i):
-            candidates[i] = db.cur_candidates(i,election_id)
-        else:
-            candidates[i]=[('Vote registered',)]
+    for i in range(1, 11):
+        candidates[i] = db.get_candidate_position_cur_election(i, election_id)
     positions = db.get_positions()
     if candidates:
-        return render_template('vote.html',user_id = user_id, packed =zip(positions,list(candidates.values())))
+        return render_template('vote.html', packed=zip(positions, list(candidates.values())))
     return "something"
 
 
@@ -75,7 +67,7 @@ def admin():
         election_details = db.get_upcoming_election_details()
         candidates = {}
         for i in range(1, 11):
-            candidates[i] = db.get_candidate_position_cur_election(i)
+            candidates[i] = db.get_candidate_position(i)
 
         positions = db.get_positions()
 
@@ -104,13 +96,17 @@ def add_candidate():
 def election(eid):
     if request.method == 'GET':
         election_details = db.get_upcoming_election_details()
+        print(election_details[1])
         return render_template('election.html', election_id=election_details[0], election_details=election_details)
+
     else:
+        print(request.form['start'], request.form['end'], eid)
         db.modify_election(request.form['start'], request.form['end'], eid)
+
         election_details = db.get_upcoming_election_details()
         candidates = {}
         for i in range(1, 11):
-            candidates[i] = db.get_candidate_position_cur_election(i)
+            candidates[i] = db.get_candidate_position(i)
 
         positions = db.get_positions()
 
