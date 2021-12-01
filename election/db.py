@@ -160,11 +160,10 @@ def get_candidate_position(id):
     return candidates
 
 
-def get_candidate_position_cur_election(id, elec_id):
+def cur_candidates(id,elec_id):
     db = get_db()
     cur = db.cursor()
-    cur.execute(
-        "SELECT name from candidate where position_id=%s AND election_id=%s", (id, elec_id))
+    cur.execute("SELECT name from candidate where position_id=%s AND election_id=%s",(id,elec_id))
     candidates = cur.fetchall()
     cur.close()
     return candidates
@@ -177,3 +176,26 @@ def get_candidate_position_cur_election(id, elec_id):
 #     cur.execute("INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('','faseem',10,4,1);",(id,))
 #     cur.close()
 #     return election
+
+def modify_votes(can_name,user_id,elec_id):
+    db = get_db()
+    cur = db.cursor()
+
+    cur.execute("UPDATE candidate SET votes=votes+1 where name=%s AND election_id=%s",(can_name,elec_id))
+
+    cur.execute("INSERT INTO votes_for (voter_email,position_id) VALUES (%s,(SELECT position_id from candidate where name=%s AND election_id=%s));",(user_id,can_name,elec_id))
+    db.commit()
+    cur.close()
+
+    return "done"
+
+def check_if_voted(user_id,position_id):
+    db = get_db()
+    cur = db.cursor()
+
+    cur.execute("SELECT * from votes_for WHERE voter_email=%s AND position_id=%s",(user_id,position_id))
+
+    voted = cur.fetchall()
+    cur.close()
+
+    return voted
