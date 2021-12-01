@@ -38,7 +38,8 @@ body {
 .inputField {
   margin-bottom: 20px;
 }
-.inputField input {
+.inputField input,
+.modal-input {
   width: 85%;
   height: 100%;
   outline: none;
@@ -135,4 +136,56 @@ body {
 }
 .fa-plus {
   z-index: -3;
+}
+.modal-overlay {
+  position: fixed;
+  /* background: rgba(73, 166, 233, 0.5); */
+  /* background: rgba(100, 92, 255, 0.5); */
+  background: rgba(0, 0, 0, 0.6);
+  /* top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0; */
+  inset: 0;
+  /* width: 100%;
+  height: 100%; */
+  display: grid;
+  place-items: center;
+  visibility: hidden;
+  z-index: -10;
+  transition: all 1s ease-in-out;
+  /* display: none; */
+}
+.open-modal {
+  /* display: grid; */
+  visibility: visible;
+  z-index: 40;
+}
+.modal-container {
+  background: #f2f2f2;
+  border-radius: 0.25rem;
+  width: 90vw;
+  height: 35vh;
+  max-width: 600px;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  background: transparent;
+  border-color: transparent;
+  color: #842029;
+  cursor: pointer;
+  transition: 0.3s ease-in-out all;
+}
+.close-btn:hover {
+  transform: rotate(360deg) scale(1.3);
+}
+.modal-input {
+  height: 60px;
 }

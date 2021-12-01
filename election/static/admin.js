@@ -82,3 +82,21 @@ const addCandidate = (id) => {
     }).then((resp) => console.log(resp.json()));
   }
 };
+
+window.onload = () => {
+  const closeBtn = document.getElementById("close-btn");
+  const modal = document.querySelector(".modal-overlay");
+  closeBtn.addEventListener("click", function () {
+    modal.classList.remove("open-modal");
+  });
+};
+
+const getModal = (id) => {
+  let myinputbox = document.getElementById("add" + id);
+  if (myinputbox.value) {
+    const nameinput = document.getElementById("modal-name");
+    nameinput.value = myinputbox.value;
+    const modal = document.querySelector(".modal-overlay");
+    modal.classList.add("open-modal");
+  }
+};

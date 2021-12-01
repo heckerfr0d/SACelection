@@ -13,6 +13,24 @@
     <title>Document</title>
   </head>
   <body>
+    <div class="modal-overlay">
+      <div class="modal-container">
+        <h3>Enter Details</h3>
+        <input
+          type="text"
+          placeholder="Enter Name"
+          id="modal-name"
+          class="modal-input"
+        />
+        <input type="email" placeholder="Enter Email" class="modal-input" />
+        <button class="close-btn" id="close-btn">
+          <i class="fas fa-times"></i>
+        </button>
+        <div class="footer">
+          <button>Add Candidate</button>
+        </div>
+      </div>
+    </div>
     <div class="wrapper">
       <header>Election Schedule</header>
       <h3>Election Start time : {{election_details[1]}}</h3>
@@ -30,7 +48,7 @@
           placeholder="Add new candidate Roll Number"
           id="add{{position[0]}}"
         />
-        <button onclick="addCandidate('{{position[0]}}')">
+        <button onclick="getModal('{{position[0]}}')">
           <i class="fas fa-plus"></i>
         </button>
       </div>
