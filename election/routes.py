@@ -1,4 +1,4 @@
-from flask import request, render_template, redirect, url_for,jsonify
+from flask import request, render_template, redirect, url_for, jsonify
 from flask import current_app as app
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_cors import CORS, cross_origin
@@ -9,40 +9,25 @@ import datetime
 
 @app.route('/')
 def root():
-    if db.get_running_election():
-        election = True
-    else:
-        if db.get_elections():
-            election = False
-        else:
-            election = True
+    election = db.get_running_election()
     print()
-    return render_template('index.html',election=election)
+    return render_template('index.html', election=election)
 
 
 @app.route('/login/', methods=['POST'])
 def login():
-    if db.get_running_election():
-        election = True
-    else:
-        if db.get_elections():
-            election = False
-        else:
-            election = True
     user = db.auth(request.form.get('email'), request.form.get('password'))
     if user:
         if user.get_status() == -1:
             if not db.get_running_election():
                 login_user(user)
                 return redirect(url_for('admin'))
-            return render_template('index.html', message="Election is already running",election=election)
+            return render_template('index.html', message="Election is already running")
         elif db.get_running_election():
             login_user(user)
             return redirect(url_for('vote'))
-        return render_template('index.html', message="Election is not active",election=election)
-    
-
-    return render_template('index.html', message="Invalid Credentials", election = election)
+        return render_template('index.html', message="Election is not active")
+    return render_template('index.html', message="Invalid Credentials")
 
 
 @app.login_manager.user_loader
@@ -63,37 +48,37 @@ def vote():
     election_id = db.get_running_election()
     if request.method == 'POST':
         resp = request.get_json()
-        result =db.modify_votes(resp['can_name'],user_id,election_id)
+        result = db.modify_votes(resp['can_name'], user_id, election_id)
         print(result)
         return "something in db"
     candidates = {}
-    for i in range(1,11):
-        if not db.check_if_voted(user_id,i):
-            candidates[i] = db.cur_candidates(i,election_id)
+    for i in range(1, 11):
+        if not db.check_if_voted(user_id, i):
+            candidates[i] = db.cur_candidates(i, election_id)
         else:
-            candidates[i]=[('Vote registered',)]
+            candidates[i] = [('Vote registered',)]
     positions = db.get_positions()
-    
-    return render_template('vote.html',user_id = user_id, packed =zip(positions,list(candidates.values())))
 
+    return render_template('vote.html', user_id=user_id, packed=zip(positions, list(candidates.values())))
 
 
 @app.route('/results/', methods=['GET', 'POST'])
-
+@login_required
 def result():
     elections = db.get_elections()
-
-    election_id = max([i[0] for i in elections if datetime.datetime.now()>i[2]])
+    election_id = max([i[0]
+                      for i in elections if datetime.datetime.now() > i[2]])
     print(election_id)
     candidates = {}
-    for i in range(1,11):
-        candidates[i] = db.cur_candidate_votes(i,election_id)
+    for i in range(1, 11):
+        candidates[i] = db.cur_candidate_votes(i, election_id)
         if candidates[i]:
-            candidates[i] = [(max(candidates[i],key=lambda x:x[1])[0],)]
+            candidates[i] = [(max(candidates[i], key=lambda x:x[1])[0],)]
         else:
-            candidates[i]= [('No candidates participated',)]
+            candidates[i] = [('No candidates participated',)]
+        print(candidates)
     positions = db.get_positions()
-    return render_template('results.html', packed =zip(positions,list(candidates.values())))
+    return render_template('results.html', packed=zip(positions, list(candidates.values())))
 
 
 @app.route('/admin/', methods=['GET', 'POST'])
@@ -117,7 +102,8 @@ def admin():
 
     election_details = db.get_upcoming_election_details()
     if not election_details:
-        election_details = [datetime.datetime.now(), datetime.datetime.now()]
+        election_details = [-1, datetime.datetime.now(),
+                            datetime.datetime.now()]
         return render_template('election.html', election_details=election_details, election_id=-1)
 
     candidates = {}
@@ -130,20 +116,22 @@ def admin():
 @app.route('/addcandidate', methods=['POST'])
 def add_candidate():
     resp = request.get_json()
-    db.add_candidate(resp['name'],resp['email'],resp['position'])
-    return jsonify({"test":"sucess"})
+    db.add_candidate(resp['name'], resp['email'], resp['position'])
+    return jsonify({"test": "sucess"})
+
 
 @app.route('/deletecandidate', methods=['POST'])
 def delete_candidate():
     resp = request.get_json()
     db.delete_candidate(resp['email'])
-    return jsonify({"test":"sucess"})
+    return jsonify({"test": "sucess"})
+
 
 @app.route('/deleteallcandidate', methods=['POST'])
 def delete_all_candidate():
     resp = request.get_json()
     db.delete_all_candidates(resp['id'])
-    return jsonify({"test":"sucess"})
+    return jsonify({"test": "sucess"})
 
 
 @app.route('/election/<eid>', methods=['GET', 'POST'])
