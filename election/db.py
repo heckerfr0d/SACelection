@@ -63,9 +63,7 @@ def get_user(email):
 
 def auth(email_id, password):
     user = get_user(email_id)
-    print(user.get_status)
     if user:
-        print(user.password)
         if user.password == hash_password(password):
             return user
     return None
@@ -136,16 +134,19 @@ def get_upcoming_election_details():
 def get_candidates(election_id):
     db = get_db()
     cur = db.cursor()
-    cur.execute("SELECT c.email_id, c.name, p.position FROM candidate c, position p WHERE c.election_id=%s AND c.position_id=p.position_id ORDER BY p.position_id, c.name", (election_id,))
+    cur.execute("SELECT c.name, c.email_id p.position FROM candidate c, position p WHERE c.election_id=%s AND c.position_id=p.position_id ORDER BY p.position_id, c.name", (election_id,))
     candidates = cur.fetchall()
     cur.close()
-    return candidates
+    packed = {}
+    for name, email, position in candidates:
+        packed[position] = packed.get(position, []) + [(name, email)]
+    return packed
 
 
 def get_positions():
     db = get_db()
     cur = db.cursor()
-    cur.execute("Select position,position_id from position")
+    cur.execute("SELECT position,position_id FROM position ORDER BY position_id")
     positions = cur.fetchall()
     cur.close()
     return positions
@@ -154,7 +155,7 @@ def get_positions():
 def get_candidate_position(id):
     db = get_db()
     cur = db.cursor()
-    cur.execute("SELECT name,email_id from candidate where position_id=%s ", (id,))
+    cur.execute("SELECT name,email_id FROM candidate where position_id=%s ", (id,))
     candidates = cur.fetchall()
     cur.close()
     return candidates
@@ -163,7 +164,7 @@ def get_candidate_position(id):
 def cur_candidates(id,elec_id):
     db = get_db()
     cur = db.cursor()
-    cur.execute("SELECT name from candidate where position_id=%s AND election_id=%s",(id,elec_id))
+    cur.execute("SELECT name FROM candidate where position_id=%s AND election_id=%s ORDER BY position_id, name",(id,elec_id))
     candidates = cur.fetchall()
     cur.close()
     return candidates
@@ -171,7 +172,7 @@ def cur_candidates(id,elec_id):
 def cur_candidate_votes(id,elec_id):
     db = get_db()
     cur = db.cursor()
-    cur.execute("SELECT name,votes from candidate where position_id=%s AND election_id=%s",(id,elec_id))
+    cur.execute("SELECT name,votes FROM candidate where position_id=%s AND election_id=%s",(id,elec_id))
     candidates = cur.fetchall()
     cur.close()
     return candidates
@@ -206,7 +207,7 @@ def modify_votes(can_name,user_id,elec_id):
     db = get_db()
     cur = db.cursor()
     cur.execute("UPDATE candidate SET votes=votes+1 where name=%s AND election_id=%s",(can_name,elec_id))
-    cur.execute("INSERT INTO votes_for (voter_email,position_id) VALUES (%s,(SELECT position_id from candidate where name=%s AND election_id=%s));",(user_id,can_name,elec_id))
+    cur.execute("INSERT INTO votes_for (voter_email,position_id) VALUES (%s,(SELECT position_id FROM candidate where name=%s AND election_id=%s));",(user_id,can_name,elec_id))
     db.commit()
     cur.close()
 
@@ -216,7 +217,7 @@ def check_if_voted(user_id,position_id):
     db = get_db()
     cur = db.cursor()
 
-    cur.execute("SELECT * from votes_for WHERE voter_email=%s AND position_id=%s",(user_id,position_id))
+    cur.execute("SELECT * FROM votes_for WHERE voter_email=%s AND position_id=%s",(user_id,position_id))
 
     voted = cur.fetchall()
     cur.close()
@@ -227,9 +228,26 @@ def get_elections():
     db = get_db()
     cur = db.cursor()
 
-    cur.execute("SELECT * from election")
+    cur.execute("SELECT * FROM election")
 
     elections = cur.fetchall()
     cur.close()
 
     return elections
+
+
+def hide_results():
+    if get_running_election() or not get_elections():
+        return True
+    return False
+
+def get_results():
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("SELECT c.name, c.votes, p.position  FROM candidate c, position p WHERE c.election_id=(SELECT election_id FROM election WHERE end_datetime=(SELECT MAX(end_datetime) FROM election WHERE end_datetime<%s)) AND c.position_id=p.position_id AND c.votes=(SELECT MAX(votes) FROM candidate WHERE position_id=c.position_id) ORDER BY p.position_id, c.name",(datetime.now(),))
+    results = cur.fetchall()
+    cur.close()
+    packed = {}
+    for name,votes,position in results:
+        packed[position] = packed.get(position,[]) + [(name,votes)]
+    return packed

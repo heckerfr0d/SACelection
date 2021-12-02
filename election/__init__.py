@@ -3,7 +3,6 @@ from flask_cors import CORS
 from flask_login import LoginManager
 from . import db
 import os
-import datetime
 
 loginmanager = LoginManager()
 cors = CORS()

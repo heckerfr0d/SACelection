@@ -45,7 +45,7 @@
     <form class="box" 
     
     action="/election/{{election_id}}"
-    
+    onsubmit="return validateForm()"
     
     method="POST">
     {%endif%}
@@ -61,6 +61,7 @@
         name="start"
         class="form-control-sm"
         type="datetime-local"
+        min="{{min}}"
         value="{{election_details[1]}}"
       />
 
@@ -73,6 +74,7 @@
         name="end"
         class="form-control-sm"
         type="datetime-local"
+        min="{{min}}"
         value="{{election_details[2]}}"
       />
     </div>
@@ -85,4 +87,13 @@
     </form>
   
   </body>
+  <script>
+    function validateForm() {
+      if (document.selectElementsByName("start")[0].value >= document.selectElementsByName("end")[0].value) {
+        alert("Election ends before it starts what?");
+        return false;
+      }
+      return true;
+    }
+  </script>
 </html>

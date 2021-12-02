@@ -26,15 +26,15 @@
         <h1 style="size:4rem">Election Results {{election_year}}</h1>
     </div>
   </div>
-    {% for position,candidates in packed%}
+    {% for position in packed%}
     <div class="wrapper">
-      <header style="padding-bottom:30px;">{{position[0]}}</header>
+      <header style="padding-bottom:30px;">{{position}}</header>
       <div style="padding-bottom:20px">The winner is:
       </div>
       <ul class="todoList">
-        {% for candidate in candidates%}
+        {% for name,votes in packed[position]%}
         <li >
-          {{candidate[0]}}
+          {{name}} - {{votes}} votes
         </li>
         {%endfor%}
       </ul>
