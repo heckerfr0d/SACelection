@@ -58,9 +58,27 @@ def vote():
         else:
             candidates[i]=[('Vote registered',)]
     positions = db.get_positions()
-    if candidates:
-        return render_template('vote.html',user_id = user_id, packed =zip(positions,list(candidates.values())))
-    return "something"
+    
+    return render_template('vote.html',user_id = user_id, packed =zip(positions,list(candidates.values())))
+
+
+
+@app.route('/results/', methods=['GET', 'POST'])
+@login_required
+def result():
+    elections = db.get_elections()
+    election_id = max([i[0] for i in elections if datetime.datetime.now()>i[2]])
+    print(election_id)
+    candidates = {}
+    for i in range(1,11):
+        candidates[i] = db.cur_candidate_votes(i,election_id)
+        if candidates[i]:
+            candidates[i] = [(max(candidates[i],key=lambda x:x[1])[0],)]
+        else:
+            candidates[i]= [('No candidates participated',)]
+        print(candidates)
+    positions = db.get_positions()
+    return render_template('results.html', packed =zip(positions,list(candidates.values())))
 
 
 @app.route('/admin/', methods=['GET', 'POST'])

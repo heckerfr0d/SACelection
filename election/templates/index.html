@@ -25,6 +25,8 @@
         <h1>SAC Election Portal</h1>
       </div>
       {% if not election%}
+      <form action="/results/" method ="post" id="form1" style="margin:0px 0px;width:150px;min-height:20px;height:30px;">
+      <button type= "submit" form ="form1" style="background:transparent;border:0px;width:250px">
       <div class="heading nav_heading result">
         <h1 style="color: #dbedf3; font-size: 42px">
           Results<span class="material-icons" style="margin-left: 5px">
@@ -32,6 +34,8 @@
           </span>
         </h1>
       </div>
+    </button>
+    </form>
       {%endif%}
     </div>
     <div class="container">
@@ -42,7 +46,7 @@
           default the password is your roll number.
         </p>
       </div>
-      <form action="/login/" method="post" onsubmit="return handleClick()">
+      <form action="/login/" method="post" onsubmit="return handleClick()" class="login_form">
         <h3>Login To Your Account</h3>
         <input
           type="email"

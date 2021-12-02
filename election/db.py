@@ -168,6 +168,14 @@ def cur_candidates(id,elec_id):
     cur.close()
     return candidates
 
+def cur_candidate_votes(id,elec_id):
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("SELECT name,votes from candidate where position_id=%s AND election_id=%s",(id,elec_id))
+    candidates = cur.fetchall()
+    cur.close()
+    return candidates
+
 def add_candidate(name,email,position):
     db = get_db()
     cur = db.cursor()
@@ -214,3 +222,14 @@ def check_if_voted(user_id,position_id):
     cur.close()
 
     return voted
+
+def get_elections():
+    db = get_db()
+    cur = db.cursor()
+
+    cur.execute("SELECT * from election")
+
+    elections = cur.fetchall()
+    cur.close()
+
+    return elections
