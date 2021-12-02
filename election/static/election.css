@@ -9,7 +9,6 @@ body {
   text-align: center;
   /* overflow: hidden; */
   height: 100vh;
-  padding: 10px;
   background: linear-gradient(to bottom, #68eacc 0%, #497be8 100%);
 }
 

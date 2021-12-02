@@ -1,4 +1,4 @@
-.login_form{
+.login_form {
   display: flex;
   flex-direction: column;
   background-color: #023e8a;
@@ -106,7 +106,7 @@ body {
   width: 35vw;
 }
 .description > h2 {
-  font-size: 3.5rem;
+  font-size: 2.5rem;
 }
 .description > p {
   font-size: 2rem;

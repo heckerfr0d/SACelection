@@ -16,9 +16,24 @@
       rel="stylesheet"
       href="{{url_for('static',filename='election.css')}}"
     />
+     <link rel="stylesheet" href="{{url_for('static',filename='index.css')}}" />
     <title>Election</title>
   </head>
   <body>
+    <div class="navbar">
+      <div class="heading nav_heading">
+        <img
+          width="80"
+          height="80"
+          src="{{url_for('static',filename='resources/logo.png')}}"
+          alt=""
+          srcset=""
+        />
+        <h1 style="font-family: 'Times New Roman', Times, serif;font-size: 64px;font-weight: 800;">
+          SAC Election Portal
+        </h1>
+      </div>
+    </div>
     {%if election_id == -1 %}
     <form class="box" 
     
