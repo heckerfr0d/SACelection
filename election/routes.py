@@ -82,7 +82,6 @@ def result():
 
 
 @app.route('/admin/', methods=['GET', 'POST'])
-@login_required
 def admin():
     if current_user.get_status() != -1:
         return "not admin"
