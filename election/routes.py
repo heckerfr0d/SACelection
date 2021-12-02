@@ -9,7 +9,10 @@ import datetime
 
 @app.route('/')
 def root():
-    election=db.get_running_election()
+    if db.get_running_election() or (not db.get_elections):
+        election = True
+    else:
+        election = False
     print()
     return render_template('index.html',election=election)
 
@@ -67,6 +70,7 @@ def vote():
 
 def result():
     elections = db.get_elections()
+
     election_id = max([i[0] for i in elections if datetime.datetime.now()>i[2]])
     print(election_id)
     candidates = {}
@@ -76,7 +80,6 @@ def result():
             candidates[i] = [(max(candidates[i],key=lambda x:x[1])[0],)]
         else:
             candidates[i]= [('No candidates participated',)]
-        print(candidates)
     positions = db.get_positions()
     return render_template('results.html', packed =zip(positions,list(candidates.values())))
 
