@@ -104,6 +104,12 @@ def delete_candidate():
     db.delete_candidate(resp['email'])
     return jsonify({"test":"sucess"})
 
+@app.route('/deleteallcandidate', methods=['POST'])
+def delete_all_candidate():
+    resp = request.get_json()
+    db.delete_all_candidates(resp['id'])
+    return jsonify({"test":"sucess"})
+
 
 @app.route('/election/<eid>', methods=['GET', 'POST'])
 def election(eid):

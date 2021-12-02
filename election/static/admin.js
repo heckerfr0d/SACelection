@@ -21,7 +21,11 @@ const addCandidate = () => {
       }),
     })
       .then((resp) => console.log(resp.json()))
-      .then(window.location.reload());
+      .then(
+        setTimeout(() => {
+          console.log(window.location.reload());
+        }, 1000)
+      );
   }
 };
 
@@ -58,6 +62,19 @@ const deleteCandidate = (email) => {
     },
     body: JSON.stringify({
       email: email,
+    }),
+  }).then((resp) => console.log(resp.json()));
+};
+const deleteAllCandidates = (id) => {
+  const list = document.getElementById("list" + id);
+  list.innerHTML = "";
+  fetch("/deleteallcandidate", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: id,
     }),
   }).then((resp) => console.log(resp.json()));
 };

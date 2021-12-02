@@ -145,7 +145,7 @@ def get_candidates(election_id):
 def get_positions():
     db = get_db()
     cur = db.cursor()
-    cur.execute("Select position from position")
+    cur.execute("Select position,position_id from position")
     positions = cur.fetchall()
     cur.close()
     return positions
@@ -191,6 +191,15 @@ def delete_candidate(email):
     cur.execute("DELETE FROM candidate WHERE email_id=%s",(email,))
     db.commit()
     cur.close()
+
+def delete_all_candidates(id):
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("DELETE FROM candidate WHERE position_id=%s",(id,))
+    db.commit()
+    cur.close()
+
+
 
 
 

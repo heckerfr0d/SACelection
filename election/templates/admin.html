@@ -60,7 +60,7 @@
           <i class="fas fa-plus"></i>
         </button>
       </div>
-      <ul class="todoList">
+      <ul class="todoList" id="list{{position[1]}}">
         {% for candidate in candidates%}
         <li id="{{candidate[1]}}">
           {{candidate[0]}}<span
@@ -75,7 +75,9 @@
         <span
           >These are the <span class="pendingTasks"></span> candidates
         </span>
-        <button>Clear All</button>
+        <button onclick="deleteAllCandidates('{{position[1]}}')">
+          Clear All
+        </button>
       </div>
     </div>
     {%endfor %}
