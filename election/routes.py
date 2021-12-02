@@ -33,7 +33,16 @@ def login():
             login_user(user)
             return redirect(url_for('vote'))
         return render_template('index.html', message="Election is not active")
-    return render_template('index.html', message="Invalid Credentials")
+    
+    if db.get_running_election():
+        election = True
+    else:
+        if db.get_elections():
+            election = False
+        else:
+            election = True
+
+    return render_template('index.html', message="Invalid Credentials", election = election)
 
 
 @app.login_manager.user_loader
