@@ -1,4 +1,4 @@
-from flask import request, render_template, redirect, url_for
+from flask import request, render_template, redirect, url_for,jsonify
 from flask import current_app as app
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_cors import CORS, cross_origin
@@ -88,8 +88,8 @@ def admin():
 @app.route('/addcandidate', methods=['POST'])
 def add_candidate():
     resp = request.get_json()
-    ## to be done ##
-    return "sucess"
+    print(resp['name'],resp['email'])
+    return jsonify({"test":"sucess"})
 
 
 @app.route('/election/<eid>', methods=['GET', 'POST'])
