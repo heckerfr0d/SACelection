@@ -13,7 +13,6 @@ body {
   width: 100%;
 
   /* overflow: hidden; */
-  padding: 10px;
   background: linear-gradient(to bottom, #68eacc 0%, #497be8 100%);
 }
 .wrapper {
@@ -142,24 +141,23 @@ body {
   /* background: rgba(73, 166, 233, 0.5); */
   /* background: rgba(100, 92, 255, 0.5); */
   background: rgba(0, 0, 0, 0.6);
-  /* top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0; */
+
   inset: 0;
-  /* width: 100%;
-  height: 100%; */
   display: grid;
   place-items: center;
-  visibility: hidden;
+  /* visibility: hidden; */
   z-index: -10;
+  opacity: 0;
+  pointer-events: none;
   transition: all 1s ease-in-out;
   /* display: none; */
 }
 .open-modal {
   /* display: grid; */
-  visibility: visible;
+  /* visibility: visible; */
   z-index: 40;
+  opacity: 1;
+  pointer-events: initial;
 }
 .modal-container {
   background: #f2f2f2;

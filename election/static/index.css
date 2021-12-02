@@ -34,7 +34,7 @@ form > h3 {
   font-size: 2rem;
 }
 
-.navbar i{
+.navbar i {
   scale: 2.5;
 }
 
@@ -74,6 +74,7 @@ form > h3 {
   padding: 1% 10%;
   padding-left: 6%;
   box-shadow: 1px 3px #fff;
+  font-family: "Times New Roman", Times, serif;
 }
 .nav_heading {
   color: #dbedf3;
@@ -81,7 +82,11 @@ form > h3 {
 }
 
 .navbar > .heading {
+  display: flex;
   font-size: 200%;
+}
+.heading > h1 {
+  margin-left: 30px;
 }
 .navbar > .home_link {
   font-size: 150%;
@@ -117,15 +122,15 @@ body {
     flex-direction: column-reverse;
   }
 
-  .comment{
+  .comment {
     font-size: 1.5rem;
   }
 
-  .navbar i{
+  .navbar i {
     scale: 1.5;
   }
 
-  .navbar h1{
+  .navbar h1 {
     font-size: 30px;
   }
 
@@ -134,9 +139,7 @@ body {
     margin: 5% 1%;
     margin-top: 5%;
     padding: 7% 7%;
- 
   }
-  
 
   .navbar > .heading {
     font-size: 125%;
@@ -165,13 +168,13 @@ body {
   .container {
     flex-direction: column-reverse;
   }
-  .description h2{
+  .description h2 {
     font-size: 2.5rem;
   }
-  .navbar h1{
+  .navbar h1 {
     font-size: 3rem;
   }
-  .comment{
+  .comment {
     font-size: 2rem;
   }
   .description > p {
@@ -186,4 +189,7 @@ body {
     width: 80%;
     margin: 5% 11%;
   }
+}
+.result:hover {
+  cursor: pointer;
 }

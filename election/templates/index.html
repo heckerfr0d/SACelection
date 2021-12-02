@@ -14,7 +14,25 @@
   </head>
   <body>
     <div class="navbar">
-      <div class="heading nav_heading"><h1>SAC Election Portal</h1></div>
+      <div class="heading nav_heading">
+        <img
+          width="80"
+          height="80"
+          src="{{url_for('static',filename='resources/logo.png')}}"
+          alt=""
+          srcset=""
+        />
+        <h1>SAC Election Portal</h1>
+      </div>
+      {% if not election%}
+      <div class="heading nav_heading result">
+        <h1 style="color: #dbedf3; font-size: 42px">
+          Results<span class="material-icons" style="margin-left: 5px">
+            plagiarism
+          </span>
+        </h1>
+      </div>
+      {%endif%}
     </div>
     <div class="container">
       <div class="description">

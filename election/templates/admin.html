@@ -9,10 +9,23 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     />
+    <link rel="stylesheet" href="{{url_for('static',filename='index.css')}}" />
     <script src="{{url_for('static',filename='admin.js')}}"></script>
     <title>Document</title>
   </head>
   <body>
+    <div class="navbar">
+      <div class="heading nav_heading">
+        <img
+          width="80"
+          height="80"
+          src="{{url_for('static',filename='resources/logo.png')}}"
+          alt=""
+          srcset=""
+        />
+        <h1>SAC Election Portal</h1>
+      </div>
+    </div>
     <div class="modal-overlay">
       <div class="modal-container">
         <h3>Enter Details</h3>

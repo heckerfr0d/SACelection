@@ -9,7 +9,9 @@ import datetime
 
 @app.route('/')
 def root():
-    return render_template('index.html')
+    election=db.get_running_election()
+    print()
+    return render_template('index.html',election=election)
 
 
 @app.route('/login/', methods=['POST'])
