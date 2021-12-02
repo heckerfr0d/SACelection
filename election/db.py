@@ -154,7 +154,7 @@ def get_positions():
 def get_candidate_position(id):
     db = get_db()
     cur = db.cursor()
-    cur.execute("SELECT name from candidate where position_id=%s ", (id,))
+    cur.execute("SELECT name,email_id from candidate where position_id=%s ", (id,))
     candidates = cur.fetchall()
     cur.close()
     return candidates
@@ -181,18 +181,23 @@ def add_candidate(name,email,position):
     cur = db.cursor()
     election_id=get_upcoming_election()
     position_id = get_position_id(position)
-    print(position_id[0],election_id[0])
     cur.execute("INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES (%s,%s,0,%s,%s)",(email,name,position_id[0],election_id[0]))
     db.commit()
     cur.close()
+
+def delete_candidate(email):
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("DELETE FROM candidate WHERE email_id=%s",(email,))
+    db.commit()
+    cur.close()
+
 
 
 def modify_votes(can_name,user_id,elec_id):
     db = get_db()
     cur = db.cursor()
-
     cur.execute("UPDATE candidate SET votes=votes+1 where name=%s AND election_id=%s",(can_name,elec_id))
-
     cur.execute("INSERT INTO votes_for (voter_email,position_id) VALUES (%s,(SELECT position_id from candidate where name=%s AND election_id=%s));",(user_id,can_name,elec_id))
     db.commit()
     cur.close()

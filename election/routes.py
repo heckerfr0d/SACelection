@@ -95,8 +95,13 @@ def admin():
 @app.route('/addcandidate', methods=['POST'])
 def add_candidate():
     resp = request.get_json()
-    print(resp['position'])
     db.add_candidate(resp['name'],resp['email'],resp['position'])
+    return jsonify({"test":"sucess"})
+
+@app.route('/deletecandidate', methods=['POST'])
+def delete_candidate():
+    resp = request.get_json()
+    db.delete_candidate(resp['email'])
     return jsonify({"test":"sucess"})
 
 
@@ -104,7 +109,6 @@ def add_candidate():
 def election(eid):
     if request.method == 'GET':
         election_details = db.get_upcoming_election_details()
-
         return render_template('election.html', election_id=election_details[0], election_details=election_details)
 
     else:

@@ -5,7 +5,6 @@ const todoList = document.querySelector(".todoList");
 const deleteAllBtn = document.querySelector(".footer button");
 
 const addCandidate = () => {
-  console.log("begin");
   const name = document.getElementById("modal-name");
   const email = document.getElementById("modal-email");
   const position = name.getAttribute("data-position");
@@ -47,4 +46,18 @@ const getModal = (id) => {
 
 const modifySchedule = (election_id) => {
   window.location.href = `${window.origin}/election/${election_id}`;
+};
+const deleteCandidate = (email) => {
+  console.log(email);
+  const candidate = document.getElementById(email);
+  candidate.remove();
+  fetch("/deletecandidate", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: email,
+    }),
+  }).then((resp) => console.log(resp.json()));
 };

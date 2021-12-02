@@ -62,8 +62,12 @@
       </div>
       <ul class="todoList">
         {% for candidate in candidates%}
-        <li>
-          {{candidate[0]}}<span class="icon"><i class="fas fa-trash"></i></span>
+        <li id="{{candidate[1]}}">
+          {{candidate[0]}}<span
+            class="icon"
+            onclick="deleteCandidate('{{candidate[1]}}')"
+            ><i class="fas fa-trash"></i
+          ></span>
         </li>
         {%endfor%}
       </ul>
