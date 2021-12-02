@@ -168,14 +168,24 @@ def cur_candidates(id,elec_id):
     cur.close()
     return candidates
 
-# def add_candidate(id):
-#     db = get_db()
-#     cur = db.cursor()
-#     cur.execute("SELECT email_id from users where email_id LIKE %%s%",(id,))
-#     email = cur.fetchone()
-#     cur.execute("INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('','faseem',10,4,1);",(id,))
-#     cur.close()
-#     return election
+def get_position_id(position):
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("Select position_id from position where position= %s ",(position,))
+    positions = cur.fetchone()
+    cur.close()
+    return positions
+
+def add_candidate(name,email,position):
+    db = get_db()
+    cur = db.cursor()
+    election_id=get_upcoming_election()
+    position_id = get_position_id(position)
+    print(position_id[0],election_id[0])
+    cur.execute("INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES (%s,%s,0,%s,%s)",(email,name,position_id[0],election_id[0]))
+    db.commit()
+    cur.close()
+
 
 def modify_votes(can_name,user_id,elec_id):
     db = get_db()

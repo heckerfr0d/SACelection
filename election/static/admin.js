@@ -8,6 +8,7 @@ const addCandidate = () => {
   console.log("begin");
   const name = document.getElementById("modal-name");
   const email = document.getElementById("modal-email");
+  const position = name.getAttribute("data-position");
   if (name.value && email.value) {
     fetch("/addcandidate", {
       method: "POST",
@@ -17,8 +18,11 @@ const addCandidate = () => {
       body: JSON.stringify({
         name: name.value,
         email: email.value,
+        position: position,
       }),
-    }).then((resp) => console.log(resp.json()));
+    })
+      .then((resp) => console.log(resp.json()))
+      .then(window.location.reload());
   }
 };
 
@@ -34,6 +38,7 @@ const getModal = (id) => {
   let myinputbox = document.getElementById("add" + id);
   if (myinputbox.value) {
     const nameinput = document.getElementById("modal-name");
+    nameinput.setAttribute("data-position", id);
     nameinput.value = myinputbox.value;
     const modal = document.querySelector(".modal-overlay");
     modal.classList.add("open-modal");

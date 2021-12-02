@@ -88,7 +88,8 @@ def admin():
 @app.route('/addcandidate', methods=['POST'])
 def add_candidate():
     resp = request.get_json()
-    print(resp['name'],resp['email'])
+    print(resp['position'])
+    db.add_candidate(resp['name'],resp['email'],resp['position'])
     return jsonify({"test":"sucess"})
 
 
