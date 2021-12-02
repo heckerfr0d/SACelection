@@ -77,7 +77,7 @@ def vote():
 
 
 @app.route('/results/', methods=['GET', 'POST'])
-@login_required
+
 def result():
     elections = db.get_elections()
     election_id = max([i[0]
