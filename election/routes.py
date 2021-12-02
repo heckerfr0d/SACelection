@@ -9,10 +9,13 @@ import datetime
 
 @app.route('/')
 def root():
-    if db.get_running_election() or (not db.get_elections):
+    if db.get_running_election():
         election = True
     else:
-        election = False
+        if db.get_elections():
+            election = False
+        else:
+            election = True
     print()
     return render_template('index.html',election=election)
 
