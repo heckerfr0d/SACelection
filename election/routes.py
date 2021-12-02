@@ -22,18 +22,6 @@ def root():
 
 @app.route('/login/', methods=['POST'])
 def login():
-    user = db.auth(request.form.get('email'), request.form.get('password'))
-    if user:
-        if user.get_status() == -1:
-            if not db.get_running_election():
-                login_user(user)
-                return redirect(url_for('admin'))
-            return render_template('index.html', message="Election is already running")
-        elif db.get_running_election():
-            login_user(user)
-            return redirect(url_for('vote'))
-        return render_template('index.html', message="Election is not active")
-    
     if db.get_running_election():
         election = True
     else:
@@ -41,6 +29,18 @@ def login():
             election = False
         else:
             election = True
+    user = db.auth(request.form.get('email'), request.form.get('password'))
+    if user:
+        if user.get_status() == -1:
+            if not db.get_running_election():
+                login_user(user)
+                return redirect(url_for('admin'))
+            return render_template('index.html', message="Election is already running",election=election)
+        elif db.get_running_election():
+            login_user(user)
+            return redirect(url_for('vote'))
+        return render_template('index.html', message="Election is not active",election=election)
+    
 
     return render_template('index.html', message="Invalid Credentials", election = election)
 
