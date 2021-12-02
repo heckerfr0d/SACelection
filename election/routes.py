@@ -9,25 +9,41 @@ import datetime
 
 @app.route('/')
 def root():
-    election = db.get_running_election()
+    if db.get_running_election():
+        election = True
+    else:
+        if db.get_elections():
+            election = False
+        else:
+            election = True
     print()
-    return render_template('index.html', election=election)
+    return render_template('index.html',election=election)
 
 
 @app.route('/login/', methods=['POST'])
 def login():
+    if db.get_running_election():
+        election = True
+    else:
+        if db.get_elections():
+            election = False
+        else:
+            election = True
     user = db.auth(request.form.get('email'), request.form.get('password'))
     if user:
         if user.get_status() == -1:
             if not db.get_running_election():
                 login_user(user)
                 return redirect(url_for('admin'))
-            return render_template('index.html', message="Election is already running")
+            return render_template('index.html', message="Election is already running",election=election)
         elif db.get_running_election():
             login_user(user)
             return redirect(url_for('vote'))
-        return render_template('index.html', message="Election is not active")
-    return render_template('index.html', message="Invalid Credentials")
+        return render_template('index.html', message="Election is not active",election=election)
+    
+
+    return render_template('index.html', message="Invalid Credentials", election = election)
+
 
 
 @app.login_manager.user_loader
@@ -49,8 +65,6 @@ def vote():
     if request.method == 'POST':
         resp = request.get_json()
         result = db.modify_votes(resp['can_name'], user_id, election_id)
-        print(result)
-        return "something in db"
     candidates = {}
     for i in range(1, 11):
         if not db.check_if_voted(user_id, i):
