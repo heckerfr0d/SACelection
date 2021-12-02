@@ -42,15 +42,22 @@ def unauth():
 @app.route('/vote/', methods=['GET', 'POST'])
 @login_required
 def vote():
-    if request.method == 'POST':
-        return "something in db"
+    user_id = current_user.get_id()
     election_id = db.get_running_election()
+    if request.method == 'POST':
+        resp = request.get_json()
+        result =db.modify_votes(resp['can_name'],user_id,election_id)
+        print(result)
+        return "something in db"
     candidates = {}
-    for i in range(1, 11):
-        candidates[i] = db.get_candidate_position_cur_election(i, election_id)
+    for i in range(1,11):
+        if not db.check_if_voted(user_id,i):
+            candidates[i] = db.cur_candidates(i,election_id)
+        else:
+            candidates[i]=[('Vote registered',)]
     positions = db.get_positions()
     if candidates:
-        return render_template('vote.html', packed=zip(positions, list(candidates.values())))
+        return render_template('vote.html',user_id = user_id, packed =zip(positions,list(candidates.values())))
     return "something"
 
 
