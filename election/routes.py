@@ -100,14 +100,5 @@ def election(eid):
         return render_template('election.html', election_id=election_details[0], election_details=election_details)
 
     else:
-        print(request.form['start'], request.form['end'], eid)
         db.modify_election(request.form['start'], request.form['end'], eid)
-
-        election_details = db.get_upcoming_election_details()
-        candidates = {}
-        for i in range(1, 11):
-            candidates[i] = db.get_candidate_position(i)
-
-        positions = db.get_positions()
-
-        return render_template('admin.html', election_id=election_details[0], election_details=election_details, packed=zip(positions, list(candidates.values())))
+        return redirect(url_for('admin'))
