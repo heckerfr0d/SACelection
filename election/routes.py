@@ -9,39 +9,25 @@ import datetime
 
 @app.route('/')
 def root():
-    if db.get_running_election():
-        election = True
-    else:
-        if db.get_elections():
-            election = False
-        else:
-            election = True
+    election = db.get_running_election()
     print()
     return render_template('index.html', election=election)
 
 
 @app.route('/login/', methods=['POST'])
 def login():
-    if db.get_running_election():
-        election = True
-    else:
-        if db.get_elections():
-            election = False
-        else:
-            election = True
     user = db.auth(request.form.get('email'), request.form.get('password'))
     if user:
         if user.get_status() == -1:
             if not db.get_running_election():
                 login_user(user)
                 return redirect(url_for('admin'))
-            return render_template('index.html', message="Election is already running", election=election)
+            return render_template('index.html', message="Election is already running")
         elif db.get_running_election():
             login_user(user)
             return redirect(url_for('vote'))
-        return render_template('index.html', message="Election is not active", election=election)
-
-    return render_template('index.html', message="Invalid Credentials", election=election)
+        return render_template('index.html', message="Election is not active")
+    return render_template('index.html', message="Invalid Credentials")
 
 
 @app.login_manager.user_loader
@@ -77,9 +63,9 @@ def vote():
 
 
 @app.route('/results/', methods=['GET', 'POST'])
+@login_required
 def result():
     elections = db.get_elections()
-
     election_id = max([i[0]
                       for i in elections if datetime.datetime.now() > i[2]])
     print(election_id)
@@ -90,6 +76,7 @@ def result():
             candidates[i] = [(max(candidates[i], key=lambda x:x[1])[0],)]
         else:
             candidates[i] = [('No candidates participated',)]
+        print(candidates)
     positions = db.get_positions()
     return render_template('results.html', packed=zip(positions, list(candidates.values())))
 
@@ -115,9 +102,8 @@ def admin():
 
     election_details = db.get_upcoming_election_details()
     if not election_details:
-        election_details = []
-        election_details[1] = datetime.datetime.now()
-        election_details[2] = datetime.datetime.now()
+        election_details = [-1, datetime.datetime.now(),
+                            datetime.datetime.now()]
         return render_template('election.html', election_details=election_details, election_id=-1)
 
     candidates = {}
