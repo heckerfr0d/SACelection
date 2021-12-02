@@ -60,13 +60,35 @@
   INSERT INTO position (position) VALUES ('Chief Student Editor (SE)');
   INSERT INTO position (position) VALUES ('Alumni Affairs Secretary (ALAS)');
 
-  INSERT INTO election(start_datetime,end_datetime,admin_email) VALUES ('2020-06-22 19:10:25-07','2022-06-22 19:10:25-07','admin@nitc.ac.in');
+  INSERT INTO election(start_datetime,end_datetime,admin_email) VALUES ('2020-06-22 19:10:25-07','2020-07-22 19:10:25-07','admin@nitc.ac.in');
+  -- INSERT INTO election(start_datetime,end_datetime,admin_email) VALUES ('2020-06-22 19:10:25-07','2022-07-22 19:10:25-07','admin@nitc.ac.in');
 
-  INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('hadif_b190513cs@nitc.ac.in','hadif',0,1,1);
+  INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('hadif_b190513cs@nitc.ac.in','Hadif Yassin Hameed',0,1,1);
 
-  INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('hanna_b190420cs@nitc.ac.in','hanna',5,2,1);
+  INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('abhinav_b190461cs@nitc.ac.in','Abhinav Ajithkumar',0,1,1);
 
-  INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('harimurali_b190547cs@nitc.ac.in','harimurali',10,3,1);
+  INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('hanna_b190420cs@nitc.ac.in','Hanna Nechikkadan',5,2,1);
 
-  INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('faseem_b190515cs@nitc.ac.in','faseem',10,4,1);
+  INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('harimurali_b190547cs@nitc.ac.in','Harimurali J',10,3,1);
+
+  INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('faseem_b190515cs@nitc.ac.in','Faseem Shanavas',10,4,1);
+
+  INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('sinadin_b190534cs@nitc.ac.in','sinadin shan',10,5,1);
+
+  INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('midhunkumar_b190439cs@nitc.ac.in','K A Midhunkumar ',10,5,1);
+
+  INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('celestine_b190468cs@nitc.ac.in','Celestine Joy',10,4,1);
+  
+  INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('shehzad_b190837cs@nitc.ac.in','Shehzad Pazheri',10,3,1);
+
+  INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('mohammedjawad_b190441cs@nitc.ac.in','Mohammed Jawad',10,1,1);
+
+
+  -- INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('hadif_b190513cs@nitc.ac.in','hadif',0,1,2);
+
+  -- INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('hanna_b190420cs@nitc.ac.in','hanna',5,2,2);
+
+  -- INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('harimurali_b190547cs@nitc.ac.in','harimurali',10,3,2);
+
+  -- INSERT INTO candidate(email_id,name,votes,position_id,election_id) VALUES ('faseem_b190515cs@nitc.ac.in','faseem',10,4,2);
 
