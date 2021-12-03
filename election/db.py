@@ -74,6 +74,15 @@ def auth(email_id, password):
             return user
     return None
 
+def change_password(email, password):
+    # function to change the password of a user
+    db = get_db()
+    cur = db.cursor()
+    password = hash_password(password)
+    cur.execute("UPDATE users SET password=%s WHERE email_id=%s", (password, email))
+    db.commit()
+    cur.close()
+    return get_user(email)
 
 def add_user(email_id, password, status):
     # function to add a new user to the db
