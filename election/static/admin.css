@@ -11,8 +11,6 @@
 }
 body {
   width: 100%;
-
-  /* overflow: hidden; */
   background: linear-gradient(to bottom, #68eacc 0%, #497be8 100%);
 }
 .wrapper {
@@ -139,23 +137,16 @@ body {
 }
 .modal-overlay {
   position: fixed;
-  /* background: rgba(73, 166, 233, 0.5); */
-  /* background: rgba(100, 92, 255, 0.5); */
   background: rgba(0, 0, 0, 0.6);
-
   inset: 0;
   display: grid;
   place-items: center;
-  /* visibility: hidden; */
   z-index: -10;
   opacity: 0;
   pointer-events: none;
   transition: all 1s ease-in-out;
-  /* display: none; */
 }
 .open-modal {
-  /* display: grid; */
-  /* visibility: visible; */
   z-index: 40;
   opacity: 1;
   pointer-events: initial;

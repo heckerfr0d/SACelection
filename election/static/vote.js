@@ -1,20 +1,17 @@
 function handlevote(can_name) {
-    console.log(can_name);
-    if (can_name != "Vote registered"){
-
-        fetch(`${window.origin}/vote`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              can_name: can_name,
-            }),
-          }).then((resp) => {
-              console.log(resp);
-              window.location.reload();
-
-            });
-        
-    }
+  //function to register the vote
+  if (can_name != "Vote registered") {
+    fetch(`${window.origin}/vote`, {
+      //sending a post request
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        can_name: can_name, // sending candidate data
+      }),
+    }).then((resp) => {
+      window.location.reload(); //reloading the window with the modified data
+    });
+  }
 }
