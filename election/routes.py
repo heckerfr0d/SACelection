@@ -50,12 +50,12 @@ def vote():
             result = db.modify_votes(resp['can_email'], user_id, election_id)# updating the number of votes for the candidate
         candidates = {}
         for i in range(1, 11):
-            if not db.check_if_voted(user_id, i) : #checking if the user has voted for that position
-                candidates[i] = db.cur_candidates(i, election_id) #getting candidates for each position
+            if not db.check_if_voted(user_id, i, election_id):  # checking if the user has already voted
+                candidates[i] = db.cur_candidates(i, election_id)   # getting the candidates for each position
             else:
                 candidates[i] = [('Vote registered','Invalid')]
-        positions = db.get_positions() #getting the position's details
-        #redirecting user to the voting page with positions and candidates passed in
+        positions = db.get_positions() # getting the position's details
+        # redirecting user to the voting page with positions and candidates passed in
         return render_template('vote.html', user_id=user_id, packed=zip(positions, list(candidates.values())))
     logout_user()
     return render_template('index.html', message="Admins cannot vote!",election=db.hide_results())
@@ -63,19 +63,8 @@ def vote():
 
 @app.route('/results/', methods=['GET'])
 def result():
-    # elections = db.get_elections()
-    # election_id = max([i[0]
-    #                   for i in elections if datetime.datetime.now() > i[2]])
-    # candidates = {}
-    # for i in range(1, 11):
-    #     candidates[i] = db.cur_candidate_votes(i, election_id)
-    #     if candidates[i]:
-    #         candidates[i] = [(max(candidates[i], key=lambda x:x[1])[0],)]
-    #     else:
-    #         candidates[i] = [('No candidates participated',)]
-    # positions = db.get_positions()
-    if not db.hide_results(): # checking if the results button is shown
-        results = db.get_results() # getting result data
+    if not db.hide_results():
+        results = db.get_results()
         return render_template('results.html', packed=results)
     return render_template('index.html', message="No results to display",election=db.hide_results())
 
@@ -83,26 +72,19 @@ def result():
 @app.route('/admin/', methods=['GET', 'POST'])
 @login_required
 def admin():
-    if current_user.get_status() != -1: #verifying the user is an admin
+    if current_user.get_status() != -1: # verifying the user is an admin
         logout_user()
         return render_template('index.html', message="Only admins can access that page",election=db.hide_results())
 
-    if db.get_running_election(): # verifying there is no activate election
+    if db.get_running_election(): # verifying there is no active election
         logout_user()
         return render_template('index.html', message="Election is already running",election=db.hide_results())
 
-    if request.method == 'POST': 
-        db.set_election(request.form['start'],
-                        request.form['end'], current_user.get_id())
-        #getting candidate and position details
-        election_details = db.get_upcoming_election_details()
-        candidates = {}
-        for i in range(1, 11):
-            candidates[i] = db.cur_candidates(i,election_details[0])
-
-        positions = db.get_positions()
-        return render_template('admin.html', election_id=election_details[0], election_details=election_details, packed=zip(positions, list(candidates.values())))
-    #getting election_details
+    if request.method == 'POST':
+        if not db.get_upcoming_election():
+            db.set_election(request.form['start'],
+                            request.form['end'], current_user.get_id())
+    # getting election_details
     election_details = db.get_upcoming_election_details()
     if not election_details: #if no election the redirecting to schedule election page
         election_details = [-1, datetime.datetime.now(),

@@ -200,18 +200,35 @@ def modify_votes(can_email,user_id,elec_id):
     #function to update the vote count and the update the vote for table 
     db = get_db()
     cur = db.cursor()
+<<<<<<< HEAD
     cur.execute("UPDATE candidate SET votes=votes+1 where email_id=%s AND election_id=%s",(can_email,elec_id)) #updating vote count
     cur.execute("INSERT INTO votes_for (voter_email,position_id) VALUES (%s,(SELECT position_id FROM candidate where email_id=%s AND election_id=%s));",(user_id,can_email,elec_id)) #updating votes_for table
+=======
+    try:
+        cur.execute("INSERT INTO votes_for (voter_email,position_id, election_id) VALUES (%s,(SELECT position_id FROM candidate where name=%s AND election_id=%s), %s);",(user_id,can_name,elec_id, elec_id))
+        cur.execute("UPDATE candidate SET votes=votes+1 where name=%s AND election_id=%s",(can_name,elec_id))
+    except:
+        return "error: kallavote"
+>>>>>>> 94c3b58 (conflicting commit lol)
     db.commit()
     cur.close()
 
     return "done"
 
+<<<<<<< HEAD
 def check_if_voted(user_id,position_id):
     #functin to check if a user has voted for a certain position
     db = get_db()
     cur = db.cursor()
     cur.execute("SELECT * FROM votes_for WHERE voter_email=%s AND position_id=%s",(user_id,position_id))
+=======
+def check_if_voted(user_id,position_id, election_id):
+    db = get_db()
+    cur = db.cursor()
+
+    cur.execute("SELECT * FROM votes_for WHERE voter_email=%s AND position_id=%s AND election_id=%s",(user_id,position_id, election_id))
+
+>>>>>>> 94c3b58 (conflicting commit lol)
     voted = cur.fetchall()
     cur.close()
 

@@ -25,14 +25,11 @@
     election_id INTEGER REFERENCES election(election_id)
   );
 
-  CREATE TABLE wins (
-    candidate_email TEXT REFERENCES candidate(email_id),
-    position_id INTEGER REFERENCES position(position_id)
-  );
-
   CREATE TABLE votes_for (
     voter_email TEXT REFERENCES users(email_id),
-    position_id INTEGER REFERENCES position(position_id)
+    position_id INTEGER REFERENCES position(position_id),
+    election_id INTEGER REFERENCES election(election_id),
+    PRIMARY KEY (voter_email, position_id, election_id)
   );
 
   -- insert dummy data into tables
