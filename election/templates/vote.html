@@ -21,7 +21,7 @@
       </div>
       <ul class="todoList">
         {% for candidate in candidates%}
-        <li onclick="handlevote('{{candidate[0]}}')">
+        <li onclick="handlevote('{{candidate[1]}}')">
           {{candidate[0]}}<span class="icon" style="background:blue;"><i class="fas fa-vote-yea"></i> </span>
         </li>
         {%endfor%}

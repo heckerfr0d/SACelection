@@ -47,13 +47,13 @@ def vote():
         election_id = db.get_running_election() #getting the active election id
         if request.method == 'POST':
             resp = request.get_json()
-            result = db.modify_votes(resp['can_name'], user_id, election_id)# updating the number of votes for the candidate
+            result = db.modify_votes(resp['can_email'], user_id, election_id)# updating the number of votes for the candidate
         candidates = {}
         for i in range(1, 11):
             if not db.check_if_voted(user_id, i) : #checking if the user has voted for that position
                 candidates[i] = db.cur_candidates(i, election_id) #getting candidates for each position
             else:
-                candidates[i] = [('Vote registered',)]
+                candidates[i] = [('Vote registered','Invalid')]
         positions = db.get_positions() #getting the position's details
         #redirecting user to the voting page with positions and candidates passed in
         return render_template('vote.html', user_id=user_id, packed=zip(positions, list(candidates.values())))

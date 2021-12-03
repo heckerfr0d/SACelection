@@ -181,7 +181,7 @@ def cur_candidates(id,elec_id):
     #function to get the candidatees of  a certain positon and a certain election
     db = get_db()
     cur = db.cursor()
-    cur.execute("SELECT name FROM candidate where position_id=%s AND election_id=%s ORDER BY position_id, name",(id,elec_id))
+    cur.execute("SELECT name,email_id FROM candidate where position_id=%s AND election_id=%s ORDER BY position_id, name",(id,elec_id))
     candidates = cur.fetchall()
     cur.close()
     return candidates
@@ -220,12 +220,12 @@ def delete_all_candidates(id):
     db.commit()
     cur.close()
 
-def modify_votes(can_name,user_id,elec_id):
+def modify_votes(can_email,user_id,elec_id):
     #function to update the vote count and the update the vote for table 
     db = get_db()
     cur = db.cursor()
-    cur.execute("UPDATE candidate SET votes=votes+1 where name=%s AND election_id=%s",(can_name,elec_id)) #updating vote count
-    cur.execute("INSERT INTO votes_for (voter_email,position_id) VALUES (%s,(SELECT position_id FROM candidate where name=%s AND election_id=%s));",(user_id,can_name,elec_id)) #updating votes_for table
+    cur.execute("UPDATE candidate SET votes=votes+1 where email_id=%s AND election_id=%s",(can_email,elec_id)) #updating vote count
+    cur.execute("INSERT INTO votes_for (voter_email,position_id) VALUES (%s,(SELECT position_id FROM candidate where email_id=%s AND election_id=%s));",(user_id,can_email,elec_id)) #updating votes_for table
     db.commit()
     cur.close()
 

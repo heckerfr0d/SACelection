@@ -1,6 +1,6 @@
-function handlevote(can_name) {
+function handlevote(can_email) {
   //function to register the vote
-  if (can_name != "Vote registered") {
+  if (can_email != "Invalid") {
     fetch(`${window.origin}/vote`, {
       //sending a post request
       method: "POST",
@@ -8,7 +8,7 @@ function handlevote(can_name) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        can_name: can_name, // sending candidate data
+        can_email: can_email, // sending candidate data
       }),
     }).then((resp) => {
       window.location.reload(); //reloading the window with the modified data
