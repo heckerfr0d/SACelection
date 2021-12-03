@@ -98,7 +98,7 @@ def admin():
         election_details = db.get_upcoming_election_details()
         candidates = {}
         for i in range(1, 11):
-            candidates[i] = db.get_candidate_position(i)
+            candidates[i] = db.cur_candidates(i,election_details[0])
 
         positions = db.get_positions()
         return render_template('admin.html', election_id=election_details[0], election_details=election_details, packed=zip(positions, list(candidates.values())))
@@ -111,7 +111,7 @@ def admin():
 
     candidates = {}
     for i in range(1, 11):
-        candidates[i] = db.get_candidate_position(i)
+        candidates[i] = db.cur_candidates(i,election_details[0])
     positions = db.get_positions()
     return render_template('admin.html', election_id=election_details[0], election_details=election_details, packed=zip(positions, list(candidates.values())))
 

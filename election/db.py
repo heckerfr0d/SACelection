@@ -144,19 +144,6 @@ def get_upcoming_election_details():
     return election
 
 
-def get_candidates(election_id):
-    # function to get the details of all candidates of a specific electons
-    db = get_db()
-    cur = db.cursor()
-    cur.execute("SELECT c.name, c.email_id p.position FROM candidate c, position p WHERE c.election_id=%s AND c.position_id=p.position_id ORDER BY p.position_id, c.name", (election_id,))
-    candidates = cur.fetchall() #fetching all results
-    cur.close()
-    packed = {}
-    for name, email, position in candidates:
-        packed[position] = packed.get(position, []) + [(name, email)]
-    return packed
-
-
 def get_positions():
     #function to get the positon details from the database
     db = get_db()
@@ -165,17 +152,6 @@ def get_positions():
     positions = cur.fetchall()
     cur.close()
     return positions
-
-
-def get_candidate_position(id):
-    #function to get the candidates of a  certain position 
-    db = get_db()
-    cur = db.cursor()
-    cur.execute("SELECT name,email_id FROM candidate where position_id=%s ", (id,)) # id is the position_id
-    candidates = cur.fetchall()
-    cur.close()
-    return candidates
-
 
 def cur_candidates(id,elec_id):
     #function to get the candidatees of  a certain positon and a certain election
