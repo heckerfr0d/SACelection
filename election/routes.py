@@ -46,12 +46,14 @@ def change_password():
 
 @app.login_manager.user_loader
 def user_loader(email_id):
+    # callback that tells flask_login how to load a user from the user ID
     user = db.get_user(email_id)
     return user
 
 
 @app.login_manager.unauthorized_handler
 def unauth():
+    # callback that tells flask_login what to do with unauthorized requests
     return redirect(url_for('login'))
 
 
