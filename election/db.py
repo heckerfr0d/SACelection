@@ -84,19 +84,6 @@ def change_password(email, password):
     cur.close()
     return get_user(email)
 
-def add_user(email_id, password, status):
-    # function to add a new user to the db
-    user = get_user(email_id)
-    if user is None:
-        db = get_db()
-        cur = db.cursor()
-        password = hash_password(password)
-        cur.execute("INSERT INTO users (email_id, password, status) VALUES (%s, %s, %s)",
-                    (email_id, password, status))
-        db.commit()  # commiting the change to the db
-        cur.close()
-        return User(email_id, password, status)
-    return None
 
 
 def set_election(start_datetime, end_datetime, admin):
