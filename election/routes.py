@@ -159,15 +159,13 @@ def election(eid):
         logout_user()
         return render_template('index.html', message="Only admins can access that page", election=db.hide_results())
     election_id = db.get_upcoming_election()
-    if election_id != eid:
+    if election_id[0] != int(eid):
         logout_user()
         return render_template('index.html', message="Invalid election id", election=db.hide_results())
     if request.method == 'GET':
         # geting the electin details to modify
         election_details = db.get_upcoming_election_details()
         return render_template('election.html', election_id=election_details[0], election_details=election_details, min=datetime.datetime.now())
-
-    else:
-        # modifying election start and end datetime
-        db.modify_election(request.form['start'], request.form['end'], eid)
-        return redirect(url_for('admin'))
+    # modifying election start and end datetime
+    db.modify_election(request.form['start'], request.form['end'], eid)
+    return redirect(url_for('admin'))
